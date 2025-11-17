@@ -186,18 +186,13 @@ export default {
 // GraphQL 处理函数（非流式）
 async function handleGraphQL(request, env, corsHeaders) {
   if (request.method !== 'POST') {
-    return new Response('Method not allowed', {
-      status: 405,
-      headers: corsHeaders
-    })
+    return new Response('Method not allowed', { status: 405, headers: corsHeaders })
   }
 
   try {
     const { query, variables } = await request.json()
-
-    // 简单的 GraphQL 解析
     const promptMatch = query.match(/generateText\s*\(\s*prompt:\s*"([^"]+)"/)
-    if (!promptMatch) {
+    if (!promptMatch && !variables?.prompt) {
       return new Response(JSON.stringify({ error: 'Invalid GraphQL query' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
@@ -206,7 +201,6 @@ async function handleGraphQL(request, env, corsHeaders) {
 
     const prompt = variables?.prompt || promptMatch[1]
 
-    // 调用 DeepSeek API（非流式）
     const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -221,9 +215,7 @@ async function handleGraphQL(request, env, corsHeaders) {
       })
     })
 
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status}`)
-    }
+    if (!response.ok) throw new Error(`API Error: ${response.status}`)
 
     const data = await response.json()
 
