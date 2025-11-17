@@ -1,0 +1,10 @@
+name = "ai-graphql-worker"
+main = "src/index.js"
+compatibility_date = "2025-11-17"
+
+# 环境变量（敏感信息用 secrets）
+[vars]
+ENVIRONMENT = "production"
+
+# 自定义域名（部署后配置）
+# route = { pattern = "api.yourdomain.com/*", zone_name = "yourdomain.com" }

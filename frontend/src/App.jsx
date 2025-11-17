@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { GraphQLClient } from 'graphql-request'
 
 // 配置 GraphQL 客户端（部署后改为你的 Worker 域名）
-const client = new GraphQLClient('https://your-worker.your-domain.com/graphql')
+const client = new GraphQLClient('https://ai-graphql-worker.lxy3988.workers.dev/graphql')
 
 function App() {
   const [prompt, setPrompt] = useState('')
