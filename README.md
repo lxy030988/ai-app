@@ -18,4 +18,8 @@ wrangler secret put OPENAI_API_KEY
 
 # 部署
 wrangler deploy
+
+https://ai-graphql-worker.lxy3988.workers.dev
+/stream
+/graphql
 ```
